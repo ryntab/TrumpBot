@@ -1,5 +1,5 @@
-![DemoTruth](/docs/logo.png)
-# TrumpBot 
+![DemoTruth](/docs/banner.jpg)
+# Trump-Bot 
 
 A Discord bot that polls Trump's Truth Social posts and shares them in your server with rich embeds, media, and post stats.
 
