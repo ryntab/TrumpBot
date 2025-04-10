@@ -55,12 +55,14 @@ export async function registerCommands() {
             }
 
             // 👇 Trigger your fetch logic here
+            await interaction.deferReply({ ephemeral: true });
+
             try {
-                await checkTruths(true); // replace with your actual logic
-                return interaction.reply({ content: '✅ Forced refresh triggered.', ephemeral: true });
+              await checkTruths(true);
+              await interaction.editReply({ content: '✅ Forced refresh triggered.' });
             } catch (err) {
-                console.error('Refresh error:', err);
-                return interaction.reply({ content: '❌ Something went wrong during refresh.', ephemeral: true });
+              console.error('Refresh error:', err);
+              await interaction.editReply({ content: '❌ Something went wrong during refresh.' });
             }
         }
     });

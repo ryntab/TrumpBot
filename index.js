@@ -4,13 +4,18 @@ import { registerCommands } from './commands/slash.js'; // or setChannel.js if t
 import { startPresenceCountdown } from './core/presence.js';
 
 client.once('ready', async () => {
-  console.log('Initializing...');
+  console.log('⚙️ Initializing...');
   try {
     await registerCommands(); // important!
+    console.log('✅ Commands registered');
+    
     startPresenceCountdown();
-    checkTruths(); // start polling
+    console.log('🚀 Presence countdown started');
+
+    // checkTruths(); // start polling
+    console.log('🏁 Ready!');
   } catch (err) {
-    console.error('Error during startup:', err);
-    process.exit(1); // Exit the process with a failure code
+    console.error('❌ Error during startup:', err);
+    process.exit(1);
   }
 });

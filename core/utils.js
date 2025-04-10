@@ -3,9 +3,19 @@ import path from 'path';
 
 const isDev = process.env.DEV === 'true';
 
-export const LAST_ID_PATH = isDev
-  ? path.join(process.cwd(), 'last-id.txt')
-  : '/data/last-id.txt';
+export const SENT_IDS_PATH = isDev
+  ? path.join(process.cwd(), 'sent-truth-ids.json')
+  : '/data/sent-truth-ids.json';
+
+export const sentTruthIds = new Set();
+
+if (fs.existsSync(SENT_IDS_PATH)) {
+  const saved = JSON.parse(fs.readFileSync(SENT_IDS_PATH, 'utf-8'));
+  for (const id of saved) {
+    sentTruthIds.add(id);
+  }
+  console.log(`🧠 Loaded ${sentTruthIds.size} previously sent Truth IDs`);
+}
 
 export const CHANNELS_PATH = isDev
   ? path.join(process.cwd(), 'channelMap.json')

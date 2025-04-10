@@ -7,6 +7,7 @@ function isSleepingHours() {
 }
 
 export function startPresenceCountdown() {
+  console.log('⏱️ Starting presence countdown...');
   setInterval(() => {
     if (!nextPollTime) return;
 
