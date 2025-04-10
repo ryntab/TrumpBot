@@ -35,15 +35,16 @@ After running the bot:
 
 1. Invite DonBot to your server with appropriate permissions.
 2. Run `/setchannel` in your server and choose a text channel.
-![DSlashSet](/docs/slash-setchannel.jpg)
 3. That’s it! TrumpBot will automatically begin posting new "Truths".
+   
+![DSlashSet](/docs/slash-setchannel.jpg)
 
 ## Example Output
 
 ```discord
-@realDonaldTrump: The Radical Left Democrats are trying to...
+@realDonaldTrump: We are taking historic action to help...
 💬 5,000 🔁 10,200 ❤️ 28,000
-Posted <t:1744237831:R>
+Posted Today at 5:44 PM
 ```
 
 ![DemoTruth](/docs/demo-truth.jpg)
