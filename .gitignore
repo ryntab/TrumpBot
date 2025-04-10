@@ -1,0 +1,5 @@
+.env
+.channelMap.json
+*.log
+last-id.txt
+node_modules/*
