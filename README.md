@@ -35,8 +35,9 @@ After running the bot:
 
 1. Invite DonBot to your server with appropriate permissions.
 2. Run `/setchannel` in your server and choose a text channel.
-![DSlashSet](/docs/slash-setchannel.jpg)
 3. That’s it! TrumpBot will automatically begin posting new "Truths".
+   
+![DSlashSet](/docs/slash-setchannel.jpg)
 
 ## Example Output
 
