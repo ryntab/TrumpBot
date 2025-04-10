@@ -37,8 +37,26 @@ if (fs.existsSync(LAST_ID_PATH)) {
   lastSentId = fs.readFileSync(LAST_ID_PATH, 'utf-8').trim();
 }
 
-export async function checkTruths() {
+export async function checkTruths(force) {
   console.log('🔄 Checking for new Truths...');
+
+  if (force) {
+    console.log('🗑️ Forcing refresh');
+
+    try {
+      fs.unlinkSync(LAST_ID_PATH);
+      console.log(`Deleted ${LAST_ID_PATH}`);
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        console.error('Error deleting last ID file:', err);
+      } else {
+        console.log(`${LAST_ID_PATH} does not exist — nothing to delete.`);
+      }
+    }
+
+    lastSentId = undefined; // 👈 this is crucial
+  }
+
   try {
     client.user.setPresence({
       activities: [{ name: 'Searching for Truths…', type: 4 }],
@@ -53,8 +71,10 @@ export async function checkTruths() {
     const data = await res.json();
     const newest = data[0];
 
+    console.log('📜 Fetched Truths:', data.length, 'Truths found.');
+
     if (!newest || newest.id === lastSentId) {
-      console.log('🤷🏻 No new Truths found. Waiting for the next check...');
+      console.log('- No new Truths found. Waiting for the next check...');
       client.user.setPresence({
         activities: [{ name: 'Standing by for Truths', type: 4 }],
         status: 'online'
