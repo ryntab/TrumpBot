@@ -5,7 +5,7 @@ import fs from 'fs/promises'; // for reading local image
 const router = express.Router();
 
 const baseWidth = 600;
-const baseHeight = 60;
+const baseHeight = 70;
 
 const backgroundBuffer = await fs.readFile('assets/Discord-Trump-Decoration-Alt.png');
 
@@ -44,17 +44,18 @@ export function generateStockBadge({ x, label, price, percentageChange, directio
         : `<polygon points="${x + 15},17 ${x + 20},27 ${x + 25},17" fill="${color}"/>`;
 
     return `
-      <rect x="${x}" y="10" rx="8" ry="8" width="110" height="20" fill="${color}" fill-opacity="0.2"/>
+      <rect x="${x}" y="6" rx="8" ry="8" width="140" height="30" fill="${color}" fill-opacity="0.3"/>
       ${arrow}
-      <text x="${x + 64}" y="21" text-anchor="middle" dominant-baseline="middle" fill="${color}" font-size="12" font-family="Arial">
-        <tspan font-weight="bold">${label}:</tspan> ${percentageChange}
+      <text x="${x + 80}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16" font-family="Arial">
+        <tspan font-weight="bold">${label}:</tspan>
+         <tspan font-weight="bold" fill="${color}">${percentageChange}</tspan>
       </text>
     `;
 }
 
 export function generateOverlaySVG(tickers = []) {
     const svgParts = tickers.map((ticker, index) => {
-        const x = 0 + index * 120;
+        const x = 0 + index * 150;
         return generateStockBadge({
             x,
             label: ticker.symbol,
@@ -79,10 +80,9 @@ router.get('/generate', async (req, res) => {
             fetchNasdaqStock('TSLA', 'stocks'),
             fetchNasdaqStock('QQQ', 'etf'),
             fetchNasdaqStock('SPY', 'etf'),
-            fetchNasdaqStock('DIA', 'etf'),
         ]);
 
-        const svgOverlay = generateOverlaySVG([djt, tesla, qqq, spy, dia]); // Skip DJT if you want
+        const svgOverlay = generateOverlaySVG([djt, tesla, qqq, spy]); // Skip DJT if you want
         const finalImage = await sharp({
             create: {
                 width: baseWidth,

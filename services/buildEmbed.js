@@ -50,7 +50,7 @@ export function buildEmbedsFromTruth(truth) {
         mainEmbed.setThumbnail(proxyImage(truth.card.image));
     }
 
-    mainEmbed.setImage(proxyImage('https://raw.githubusercontent.com/ryntab/TrumpBot/refs/heads/master/assets/Discord-Trump-Decoration-Alt.png'));
+    mainEmbed.setImage(proxyImage('https://raw.githubusercontent.com/ryntab/TrumpBot/refs/heads/master/assets/Reactive_Banner.png'));
 
     const embeds = [mainEmbed];
 
