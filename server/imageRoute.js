@@ -24,6 +24,7 @@ async function fetchNasdaqStock(symbol, type) {
 
         const data = response.data.primaryData;
 
+
         return {
             symbol,
             price: data.lastSalePrice.replace('$', ''),
@@ -45,7 +46,7 @@ export function generateStockBadge({ x, label, price, percentageChange, directio
     return `
       <rect x="${x}" y="6" rx="2" ry="2" width="140" height="30" fill="${color}" fill-opacity=".3"/>
       ${arrow}
-      <text x="${x + 70}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16" font-family="Arial">
+      <text x="${x + 70}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16">
         <tspan font-weight="bold">${label}</tspan>
          <tspan font-weight="bold" fill="${textColor}">${percentageChange}</tspan>
       </text>
