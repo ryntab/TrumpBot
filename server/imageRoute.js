@@ -9,6 +9,14 @@ const baseHeight = 70;
 
 const backgroundBuffer = await fs.readFile('assets/Discord-Trump-Decoration-Alt.png');
 
+let ROBO_FONT_BASE64;
+
+async function loadFont() {
+    const fontBuffer = await fs.readFile('assets/Roboto-Medium.ttf');
+    ROBO_FONT_BASE64 = fontBuffer.toString('base64');
+}
+
+
 // Load and resize the banner
 const banner = await sharp(backgroundBuffer)
     .resize(600, 30)
@@ -46,7 +54,7 @@ export function generateStockBadge({ x, label, price, percentageChange, directio
     return `
       <rect x="${x}" y="6" rx="2" ry="2" width="140" height="30" fill="${color}" fill-opacity=".3"/>
       ${arrow}
-      <text x="${x + 70}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16">
+      <text x="${x + 70}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16" font-family="Roboto">
         <tspan font-weight="bold">${label}</tspan>
          <tspan font-weight="bold" fill="${textColor}">${percentageChange}</tspan>
       </text>
@@ -54,6 +62,7 @@ export function generateStockBadge({ x, label, price, percentageChange, directio
 }
 
 export function generateOverlaySVG(tickers = []) {
+
     const svgParts = tickers.map((ticker, index) => {
         const x = 0 + index * 150;
         return generateStockBadge({
@@ -68,11 +77,23 @@ export function generateOverlaySVG(tickers = []) {
     });
 
     return `
-      <svg width="600" height="50" xmlns="http://www.w3.org/2000/svg">
-        ${svgParts.join('\n')}
-      </svg>
-    `;
+    <svg width="600" height="50" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <style type="text/css"><![CDATA[
+          @font-face {
+            font-family: 'Roboto';
+            font-weight: 500;
+            src: url('data:font/ttf;base64,${ROBO_FONT_BASE64}') format('truetype');
+          }
+          text { font-family: 'Roboto'; }
+        ]]></style>
+      </defs>
+      ${svgParts.join('\n')}
+    </svg>
+  `;
 }
+
+await loadFont(); // Load the font before generating the SVG
 
 router.get('/generate', async (req, res) => {
     try {
