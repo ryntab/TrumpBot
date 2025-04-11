@@ -23,7 +23,6 @@ async function fetchNasdaqStock(symbol, type) {
         const response = await res.json();
 
         const data = response.data.primaryData;
-        console.log(data);
 
         return {
             symbol,
@@ -38,17 +37,17 @@ async function fetchNasdaqStock(symbol, type) {
     }
 }
 
-export function generateStockBadge({ x, label, price, percentageChange, direction, color }) {
+export function generateStockBadge({ x, label, price, percentageChange, direction, color, textColor }) {
     const arrow = direction === 'up'
-        ? `<polygon points="${x + 15},27 ${x + 20},17 ${x + 25},27" fill="${color}"/>`
-        : `<polygon points="${x + 15},17 ${x + 20},27 ${x + 25},17" fill="${color}"/>`;
+        ? `<polygon points="${x + 5},27 ${x + 10},17 ${x + 15},27" fill="${textColor}"/>`
+        : `<polygon points="${x + 5},17 ${x + 10},27 ${x + 15},17" fill="${textColor}"/>`;
 
     return `
-      <rect x="${x}" y="6" rx="8" ry="8" width="140" height="30" fill="${color}" fill-opacity="0.3"/>
+      <rect x="${x}" y="6" rx="2" ry="2" width="140" height="30" fill="${color}" fill-opacity=".3"/>
       ${arrow}
-      <text x="${x + 80}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16" font-family="Arial">
-        <tspan font-weight="bold">${label}:</tspan>
-         <tspan font-weight="bold" fill="${color}">${percentageChange}</tspan>
+      <text x="${x + 70}" y="22" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="16" font-family="Arial">
+        <tspan font-weight="bold">${label}</tspan>
+         <tspan font-weight="bold" fill="${textColor}">${percentageChange}</tspan>
       </text>
     `;
 }
@@ -62,7 +61,8 @@ export function generateOverlaySVG(tickers = []) {
             price: ticker.price,
             percentageChange: ticker.percentageChange,
             direction: ticker.change >= 0 ? 'up' : 'down',
-            color: ticker.change >= 0 ? '#28a745' : '#dc3545'
+            color: ticker.change >= 0 ? '#28a745' : '#d13f3f',
+            textColor: ticker.change >= 0 ? '#00ff80' : '#ff0000',
         });
     });
 
