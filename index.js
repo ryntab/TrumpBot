@@ -5,14 +5,14 @@ import { client } from './core/client.js';
 import { registerCommands } from './commands/slash.js';
 import { startPresenceCountdown } from './core/presence.js';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// const app = express();
+// const PORT = process.env.PORT || 3000;
 
-app.use('/', imageRoute);
+// app.use('/', imageRoute);
 
-app.listen(PORT, () => {
-  console.log(`Image generator running at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Image generator running at http://localhost:${PORT}`);
+// });
 
 client.once('ready', async () => {
   try {
