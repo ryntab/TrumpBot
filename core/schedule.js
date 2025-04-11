@@ -10,5 +10,5 @@ export function scheduleNextCheck(callback, delay = getAdjustedPollingDelay()) {
 
 export function getAdjustedPollingDelay() {
   const hourUTC = new Date().getUTCHours();
-  return (hourUTC >= 5 && hourUTC < 8) ? 3 * 60 * 60 * 1000 : 45 * 60 * 1000;
+  return (hourUTC >= 5 && hourUTC < 8) ? 30 * 60 * 1000 : 1 * 60 * 1000;
 }

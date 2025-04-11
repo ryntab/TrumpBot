@@ -39,7 +39,7 @@ export async function checkTruths(force, targetGuildId = null) {
 
   try {
     client.user.setPresence({
-      activities: [{ name: 'Searching for Truths…', type: 4 }],
+      activities: [{ name: 'Scanning for Truths...', type: 4 }],
       status: 'online'
     });
 
@@ -62,7 +62,7 @@ export async function checkTruths(force, targetGuildId = null) {
     if (newTruths.length === 0) {
       console.log('- No new Truths found. Waiting for the next check...');
       client.user.setPresence({
-        activities: [{ name: 'Standing by for Truths', type: 4 }],
+        activities: [{ name: 'Nothing new yet...', type: 4 }],
         status: 'online'
       });
       scheduleNextCheck(checkTruths);

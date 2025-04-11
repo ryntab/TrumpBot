@@ -1,5 +1,8 @@
 import { client } from './client.js';
 import { nextPollTime } from './schedule.js';
+import config from '../config.js';
+
+const { normal, sleeping, burst } = config.polling;
 
 function isSleepingHours() {
   const utcHour = new Date().getUTCHours();
@@ -31,17 +34,26 @@ export function startPresenceCountdown() {
       activities: [{ name: statusText.trim(), type: 4 }],
       status: isSleepingHours() ? 'idle' : 'online'
     });
-  }, 15000);
+  }, 5000);
 }
 
 export function updatePresenceWithNextPoll() {
-  const sleeping = isSleepingHours();
-  const time = Math.floor((Date.now() + (sleeping ? 3 : 0.75) * 60 * 60 * 1000) / 1000);
+  const isSleep = isSleepingHours();
+  const pollInterval = isSleep ? sleeping : normal;
+  const time = Math.floor((Date.now() + pollInterval) / 1000);
+
   client.user.setPresence({
-    activities: [{
-      name: `${sleeping ? 'Sleeping 💤' : 'Next check'} • <t:${time}:R>`,
-      type: 4
-    }],
-    status: sleeping ? 'idle' : 'online'
+    activities: [
+      {
+        name: `${isSleep ? 'Sleeping 💤' : 'Next check'} • <t:${time}:R>`,
+        type: 4
+      }
+    ],
+    status: isSleep ? 'idle' : 'online'
   });
+}
+
+
+export function getBurstPollingDelay() {
+  return burst;
 }
