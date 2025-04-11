@@ -58,11 +58,11 @@ export async function registerCommands() {
             await interaction.deferReply({ ephemeral: true });
 
             try {
-              await checkTruths(true);
-              await interaction.editReply({ content: '✅ Forced refresh triggered.' });
+                await checkTruths(true, interaction.guildId);
+                await interaction.editReply({ content: '✅ Forced refresh triggered.' });
             } catch (err) {
-              console.error('Refresh error:', err);
-              await interaction.editReply({ content: '❌ Something went wrong during refresh.' });
+                console.error('Refresh error:', err);
+                await interaction.editReply({ content: '❌ Something went wrong during refresh.' });
             }
         }
     });

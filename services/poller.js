@@ -39,7 +39,11 @@ const headers = {
 
 let isPolling = false;
 
-export async function checkTruths(force) {
+export async function checkTruths(force, targetGuildId = null) {
+
+  if (force && targetGuildId) {
+    console.log(`🔄 Forcing check for new Truths in guild: ${targetGuildId}`);
+  } 
 
   if (isPolling) {
     console.log('⏱️ Poll already running, skipping...');
@@ -133,6 +137,8 @@ export async function checkTruths(force) {
       }
 
       for (const [guildId, channelId] of channelMap.entries()) {
+        if (targetGuildId && guildId !== targetGuildId) continue;
+        
         const channel = await client.channels.fetch(channelId).catch(() => null);
         if (!channel) continue;
 
