@@ -4,6 +4,7 @@ import { client } from '../core/client.js';
 import {
   channelMap,
   proxyImage,
+  USER_ID,
   SENT_IDS_PATH,
   sentTruthIds,
 } from '../core/utils.js';
@@ -11,7 +12,6 @@ import { updatePresenceWithNextPoll } from '../core/presence.js';
 import { scheduleNextCheck } from '../core/schedule.js';
 import fs from 'fs';
 import { fetch } from 'undici';
-import { HeaderGenerator } from 'header-generator';
 import {
   EmbedBuilder,
   ActionRowBuilder,
@@ -19,23 +19,6 @@ import {
   ButtonStyle
 } from 'discord.js';
 
-const userID = '107780257626128497';
-
-const headerGenerator = new HeaderGenerator({
-  browsers: [{ name: 'chrome', minVersion: 99 }],
-  devices: ['desktop'],
-  operatingSystems: ['windows']
-});
-
-const headers = {
-  ...headerGenerator.getHeaders(),
-  Accept: 'application/json',
-  Referer: 'https://truthsocial.com/',
-  Origin: 'https://truthsocial.com',
-  'Sec-Fetch-Site': 'same-origin',
-  'Sec-Fetch-Mode': 'cors',
-  'Sec-Fetch-Dest': 'empty'
-};
 
 let isPolling = false;
 
@@ -60,8 +43,7 @@ export async function checkTruths(force, targetGuildId = null) {
     });
 
     const res = await fetch(
-      `http://api.scrape.do?token=${process.env.SCRAPE_DO_TOKEN}&url=https://truthsocial.com/api/v1/accounts/${userID}/statuses`,
-      { headers }
+      `http://api.scrape.do?token=${process.env.SCRAPE_DO_TOKEN}&url=https://truthsocial.com/api/v1/accounts/${USER_ID}/statuses`
     );
 
     const data = await res.json();
@@ -138,7 +120,7 @@ export async function checkTruths(force, targetGuildId = null) {
 
       for (const [guildId, channelId] of channelMap.entries()) {
         if (targetGuildId && guildId !== targetGuildId) continue;
-        
+
         const channel = await client.channels.fetch(channelId).catch(() => null);
         if (!channel) continue;
 

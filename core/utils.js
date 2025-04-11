@@ -3,6 +3,11 @@ import path from 'path';
 
 const isDev = process.env.DEV === 'true';
 
+const DEFAULT_USER_ID = '107780257626128497';
+export const USER_ID = process.env.TRUTH_USER_ID || DEFAULT_USER_ID;
+
+console.log(USER_ID)
+
 export const SENT_IDS_PATH = isDev
   ? path.join(process.cwd(), 'sent-truth-ids.json')
   : '/data/sent-truth-ids.json';
