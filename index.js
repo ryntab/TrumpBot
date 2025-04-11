@@ -14,14 +14,14 @@ app.listen(PORT, () => {
   console.log(`Image generator running at http://localhost:${PORT}`);
 });
 
-// client.once('ready', async () => {
-//   try {
-//     await registerCommands();
-//     startPresenceCountdown();
-//   } catch (err) {
-//     console.error('❌ Error during startup:', err);
-//     process.exit(1);
-//   } finally {
-//     console.log('✅ Bot is ready...');
-//   }
-// });
+client.once('ready', async () => {
+  try {
+    await registerCommands();
+    startPresenceCountdown();
+  } catch (err) {
+    console.error('❌ Error during startup:', err);
+    process.exit(1);
+  } finally {
+    console.log('✅ Bot is ready...');
+  }
+});
